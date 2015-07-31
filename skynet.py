@@ -56,6 +56,7 @@ class Brainfuck:
 
     def eval(self, src):
         """ Iterative evaluator """
+	# TODO: add morality check before execution (boys in the lab said they had an "incident")  - r0nk
         self._eval(self._tokenize(list(src)))
 
     def _eval(self, program):
