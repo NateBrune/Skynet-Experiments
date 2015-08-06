@@ -115,9 +115,9 @@ while Continue:
             pass
         for inc in range(0, len(brains[i].idol)):
             if(len(brains[i].outputs)>inc):
-                brains[i].score += 256 - abs(ord(brains[i].outputs[inc]) - ord(brains[i].idol[inc]))
-        brains[i].score-= abs((len(brains[i].outputs)-1)-(len(brains[i].idol)-1))*128
-        if brains[i].score > fitBrainScore:
+                brains[i].score += 256 - abs(ord(brains[i].outputs[inc]) - ord(brains[i].idol[inc])) # Fitness = ascii value I wanted - ascii value program outputed
+        brains[i].score-= abs((len(brains[i].outputs)-1)-(len(brains[i].idol)-1))*128 #Fitness function to get the length of the output correct.
+        if brains[i].score > fitBrainScore: #Rate the brains to find the best
             fitBrainId=i
             fitBrainScore = brains[i].score
         else:
@@ -127,8 +127,8 @@ while Continue:
     winningScript=scripts[fitBrainId]
     scripts[0]=winningScript
     chance = random.randint(0, 1000)
-    if chance == 1002:
-        scripts[0] = ''.join(i if random.randint(0, 5) else random.choice("+-<>.,") for i in scripts[0])
+    if chance == 1002: #Old method
+        scripts[0] = ''.join(i if random.randint(0, 5) else random.choice("+-<>.,") for i in scripts[0]) #Genetically mutate by changing every few characters
         scripts[0] = scripts[0][:-1]
     if (round%1000)==0:
         print("Winning Strain:     " + winningScript)
@@ -141,10 +141,10 @@ while Continue:
         print("Output: " + "".join(finstr) + "\n\n")
     for i in range(1,8):
         scripts[i] = winningScript
-        scripts[i]=''.join(i if random.randint(0, 5) else random.choice("+-<>.,") for i in scripts[i])
+        scripts[i]=''.join(i if random.randint(0, 5) else random.choice("+-<>.,") for i in scripts[i])  # Mutate every 5 characters or so
         chance = random.randint(0, 15)
         for times in range(0, chance):
-            scripts[i]+=random.choice("+-<>.,")
+            scripts[i]+=random.choice("+-<>.,") #Add between 0 and 15 characters onto the end of the script
         if "".join(finstr)==Brainfuck().idol:
             print("Winner Found!")
             print("ROUND: " + str(round))
